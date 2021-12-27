@@ -24,7 +24,6 @@ export const TrackLists = () => {
   const [tracklists, setTrackLists] = useRecoilState(tracklistsState)
 
   const [playIndex, setPlayIndex] = useState(0)
-  const [sliderValue, setSliderValue] = useState(0)
 
   const {
     isPlaying,
@@ -42,6 +41,29 @@ export const TrackLists = () => {
       setTrackLists(res.data)
     })
   }, [])
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(c => c + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      let lastIndex = 0
+      tracklists?.tracks.map((track, index) => {
+        if (seekBarValue >= track.time) {
+          lastIndex = index
+        }
+      })
+      if (playIndex !== lastIndex) {
+        setPlayIndex(lastIndex)
+      }
+    }
+  }, [count])
+
 
   return (
     <>

@@ -18,7 +18,6 @@ export const useYoutube = () => {
         if (!youtube) return;
         const currentTime = youtube.getCurrentTime();
         setSeekBarValue(currentTime);
-        console.log(youtube.getPlayerState());
         youtube.getPlayerState() === 1 ? setPlaying(true) : setPlaying(false);
       }, 100);
       return () => clearInterval(interval);
