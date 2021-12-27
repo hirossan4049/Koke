@@ -5,17 +5,22 @@ import { TrackLists } from "./pages/tracklists/TrackLists"
 import { Home } from "./pages/home/Home"
 import logo from './logo.svg';
 import './App.css';
+import { Box, Flex } from '@chakra-ui/react';
 
 function App() {
   return (
-    <BrowserRouter>
-      <h1>hello router</h1>
-      <Routes >
-      <Route path="/" element={<Home />} />
-      <Route path="/tracklists/:trackId" element={<TrackLists/>} />
-      <Route element={<h1>not found</h1>} />
-      </Routes>
-    </BrowserRouter>
+    <Box bg="gray.100" width="100" >
+      <BrowserRouter>
+        <Flex bg="white" height={{base: "0", md: "10"}}>
+
+        </Flex>
+        <Routes >
+        <Route path="/" element={<Home />} />
+        <Route path="/tracklists/:trackId" element={<TrackLists/>} />
+        <Route element={<h1>not found</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </Box>
   );
 }
 

@@ -7,7 +7,7 @@ import React, {
 
 import Youtube from "react-youtube";
 
-const useYoutube = () => {
+export const useYoutube = () => {
     const [youtube, setYoutube] = useState<YT.Player>();
     const [isPlaying, setPlaying] = useState(false);
     const [duration, setDuration] = useState(0.0);
@@ -45,12 +45,11 @@ const useYoutube = () => {
       [youtube]
     );
   
-    const onSeekBarChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-      e => {
+    const onSeekBarChange = useCallback(
+      (n: number) => {
         if (!youtube) return;
-        const time = parseFloat(e.target.value);
-        youtube.seekTo(time, true);
-        setSeekBarValue(time);
+        youtube.seekTo(n, false);
+        setSeekBarValue(n);
       },
       [youtube]
     );
@@ -107,7 +106,7 @@ export const YoutubeEmbed = () => {
           min={0.0}
           max={duration}
           step={0.1}
-          onChange={onSeekBarChange}
+          // onChange={onSeekBarChange}
         />
       </div>
         </>
