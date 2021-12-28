@@ -10,7 +10,7 @@ import axios from "axios";
 
 import { TrackListsType } from "../../actions/types";
 import { TrackItem } from "./components/TrackItem"
-import { useYoutube, YoutubeEmbed } from "./components/YoutubeEmbed";
+import { useYoutube, YoutubeEmbed } from "../components/YoutubeEmbed";
 import { tracklistsState } from "./recoil/atoms";
 import { Box, Heading, Flex, Text, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Center } from "@chakra-ui/react";
 

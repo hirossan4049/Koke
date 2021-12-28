@@ -6,6 +6,7 @@ import { Home } from "./pages/home/Home"
 import logo from './logo.svg';
 import './App.css';
 import { Box, Flex } from '@chakra-ui/react';
+import { Editor } from './pages/editor/Editor';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/tracklists/:trackId" element={<TrackLists/>} />
+        <Route path="/editor/:trackId" element={<Editor />} />
         <Route element={<h1>not found</h1>} />
         </Routes>
       </BrowserRouter>
