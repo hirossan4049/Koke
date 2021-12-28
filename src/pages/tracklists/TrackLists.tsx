@@ -12,7 +12,7 @@ import { TrackListsType } from "../../actions/types";
 import { TrackItem } from "./components/TrackItem"
 import { useYoutube, YoutubeEmbed } from "./components/YoutubeEmbed";
 import { tracklistsState } from "./recoil/atoms";
-import { Box, Heading, Flex, Text, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Center } from "@chakra-ui/react";
 
 import Youtube from "react-youtube";
 import { IoPause, IoPlay } from "react-icons/io5";
@@ -45,13 +45,14 @@ export const TrackLists = () => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount(c => c + 1);
+      if (isPlaying) {
+        setCount(c => c + 1);
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (isPlaying) {
       let lastIndex = 0
       tracklists?.tracks.map((track, index) => {
         if (seekBarValue >= track.time) {
@@ -61,20 +62,22 @@ export const TrackLists = () => {
       if (playIndex !== lastIndex) {
         setPlayIndex(lastIndex)
       }
-    }
+    
   }, [count])
 
 
   return (
     <>
-      <Box pb={82} pt={16} pl={{ base: 0, md: 24}} pr={{ base: 0, md: 24}} align="center" >
+    <Center>
+      <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 24}} align="center" >
         <Heading as="h3" size="md" >{ tracklists?.trackName } </Heading>
 
-        <Box bg="white" p={2} m={4} mt={6} align="center" rounded="md" shadow="sm" >
+        <Box bg="white" p={4} m={4} mt={6} align="center" rounded="xl" shadow="sm">
           <Youtube
           videoId={trackId}
           onReady={onReady}
-          opts={{
+          opts={{ 
+            width: "100%",
             playerVars: {
               controls: 1,
               disablekb: 1,
@@ -91,7 +94,8 @@ export const TrackLists = () => {
           ))
         }
       </Box>
-      <Flex pos="fixed" zIndex={2} bg="white" h={"72px"} bottom={0} m={"4"} mr={"2%"} ml={"2%"} shadow="2xl" rounded="xl" w="96%" align={"center"}>
+    </Center>
+      <Flex pos="fixed" zIndex={2} bg="white" h={"72px"} bottom={0} m={"4"} mr={"2%"} ml={"2%"} shadow="2xl" rounded="2xl" w="96%" align={"center"}>
         <Icon as={isPlaying ? IoPause : IoPlay} w={7} h={7} color={"gray.600"} ml={4} mb={4} onClick={() => onPlayPauseButtonClick()} />
         <Box ml={4} mb={4}>
           <Text fontSize="18" fontWeight={"bold"}>{tracklists?.tracks[playIndex].name }</Text>
@@ -103,7 +107,10 @@ export const TrackLists = () => {
             min={0}
             max={duration}
             onChange={(v) => onSeekBarChange(v)}
-            onChangeEnd={(v) => onSeekButtonClick(seekBarValue)}
+            onChangeEnd={(v) => {
+              setCount(count + 1)
+              onSeekButtonClick(seekBarValue) 
+            }}
             value={seekBarValue}
              >
               <SliderTrack>

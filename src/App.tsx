@@ -11,9 +11,8 @@ function App() {
   return (
     <Box bg="gray.100" width="100" >
       <BrowserRouter>
-        <Flex bg="white" height={{base: "0", md: "10"}}>
-
-        </Flex>
+        {/* <Flex bg="white" height={{base: "0", md: "10"}}>
+        </Flex> */}
         <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/tracklists/:trackId" element={<TrackLists/>} />

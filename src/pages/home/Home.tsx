@@ -1,10 +1,51 @@
 import * as React from "react"
 
+import { Box, Heading, Flex, Text, Input, Center, Icon, LinkBox, LinkOverlay, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+import { IoArrowForward } from "react-icons/io5";
+import { HomeTrackItem } from "./components/HomeTrackItem";
+import { useEffect, useState } from "react";
+
+import { TrackListsType } from "../../actions/types";
+import axios from "axios";
 
 export const Home = () => {
+
+
+    const [tracklists, setTracklists] = useState<[TrackListsType]>()
+
+    useEffect(() => {
+        axios.get<[TrackListsType]>("http://localhost:8000/latest-tracklists")
+        .then(res => {
+            console.log("res.data", res.data)
+          setTracklists(res.data)
+          tracklists?.map((value, index) => {
+            console.log(value.trackName, index)
+          })
+        })
+      }, [])
+
+
     return (
         <>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VF9aViGjt1o" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <Box bgGradient='linear(to-l, red.400, pink.400)' h="800" p={{md: 32, base: 4}} verticalAlign={"center"}>
+            <Heading color={"white"} textAlign={"center"}>あああ</Heading>
+            <Text mt={10} fontSize={"2xl"} color={"gray.100"} fontWeight={"bold"} textAlign={"center"} >あああはYoutubeに上がっている音楽ライブのトラックリストをより見やすくしたWebアプリです</Text>
+            <Center>
+                <InputGroup mt={28} w="500px" >
+                    <Input bg={"white"} rounded={"full"} h={16} border={"none"} boxShadow={"red"} fontWeight={"bold"} shadow={"xl"} fontSize={"24"} placeholder='Youtube動画URLまたはIDを入力' />
+                    <InputRightElement h={16} children={<IconButton aria-label="Search" icon={<Icon as={IoArrowForward} w={8} h={8} />} bgColor={"white"} color="red.400" mr={4} rounded={"full"} onClick={() => {console.log("clicked")}} />} />
+                </InputGroup>
+            </Center>
+            </Box>
+
+            <Center>
+                <Box p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}}>
+                    <Text fontSize={"2xl"} fontWeight={"bold"} pl={6} >最近追加されたトラックリスト</Text>
+                    { tracklists?.map((value) => (
+                        <HomeTrackItem title={value.trackName} artist={"アーティスト: 不明"} href={"/tracklists/" + value.trackId} />
+                        ))}
+                </Box>
+            </Center>
         </>
     )
 }

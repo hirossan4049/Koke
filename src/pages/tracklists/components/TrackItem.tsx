@@ -7,17 +7,20 @@ import { IoPlay, IoPause } from "react-icons/io5";
 
 
 function makeTime(num: number) {
-    const timeH = Math.floor(num % (24 * 60 * 60) / (60 * 60));
-    const timeM = Math.floor(num % (24 * 60 * 60) % (60 * 60) / 60);
-    const timeS =num % (24 * 60 * 60) % (60 * 60) % 60;
-    const timeDMS = timeH + ':' + timeM + ':' + timeS + '';
+    const timeH = ("0" + Math.floor(num % (24 * 60 * 60) / (60 * 60))).slice(-2)
+    const timeM = ("0" + Math.floor(num % (24 * 60 * 60) % (60 * 60) / 60)).slice(-2)
+    const timeS = ("0" + (num % (24 * 60 * 60) % (60 * 60) % 60)).slice(-2)
+    if (timeH === "00") {
+        return timeM + ':' + timeS
+    }
+    const timeDMS = timeH + ':' + timeM + ':' + timeS;
     return timeDMS;
   }
   
 
 export const TrackItem = ({ item, isPlaying, onClick }: {item: TrackListsItemType, isPlaying: boolean, onClick: () => void }) => {
     return (
-        <LinkBox as='article' rounded="md" bg="white" shadow="sm" p={2} m={4}>
+        <LinkBox rounded="xl" bg={ isPlaying ? "blue.100" : "white"} shadow="sm" p={2} m={4}>
             {/* <Skeleton mb={4} h={"1rem"} />
             <Skeleton mb={4} h={"1rem"} w={20} /> */}
         <LinkOverlay href={'#' + item.time} onClick={ () => onClick() }>
