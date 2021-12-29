@@ -9,7 +9,7 @@ import { TrackListsItemType, TrackListsType } from "../../actions/types";
 import { TrackItem } from "../tracklists/components/TrackItem";
 import { useYoutube, YoutubeEmbed } from "../components/YoutubeEmbed";
 import Youtube from "react-youtube";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { tracklistsState } from "../tracklists/recoil/atoms";
 import { EditTrackItem } from "./components/EditTrackItem";
@@ -61,55 +61,24 @@ export const Editor = () => {
       
     }, [count])
 
-    const handleDragEnd = useCallback(
-        (result) => {
-          const { source, destination } = result;
-          const souTrack = tracklists!.tracks[source.index]
-          const desTrack = tracklists!.tracks[destination.index]
-          let tl = tracklists!
-          console.log(tl.tracks[source.index].name, " to " , tracklists!.tracks[destination.index].name)
-          console.log(source.index, " to " , destination.index)
-        //   const tracks: TrackListsItemType[] = tl.tracks.slice() as TrackListsItemType[]
-        //   tl.tracks.splice(source.index, source.index, tl.tracks[destination.index])
-        //   tl.tracks.splice(destination.index, destination.index, souTrack)
-          console.log(tl.tracks[source.index].name, " to " , tracklists!.tracks[destination.index].name)
-          console.log(source.index, " to " , destination.index)
 
-          const si = source.index
-          const di = destination.index
-
-        //   tl.tracks[si] = desTrack
-          tl.tracks[di] = souTrack
-          tl.tracks.splice(source.index, 1)
-        //   tl.tracks = tracks as [TrackListsItemType]
-          setTrackLists(tl)
-        //   const _notSelected = notSelected.slice();
-        //   const _Selected = selected.slice();
-          // reorder
-
-        //   if (source.droppableId === destination.droppableId) {
-        //     const _items =
-        //       source.droppableId === "notSelected" ? _notSelected : _Selected;
-        //     const setData =
-        //       source.droppableId === "notSelected" ? setNotSelected : setSelected;
-        //     const [removed] = _items.splice(source.index, 1);
-        //     _items.splice(destination.index, 0, removed);
-        //     setData(_items);
-        //   }
-        //   // move to other column
-        //   else {
-        //     const sourceList =
-        //       source.droppableId === "notSelected" ? _notSelected : _Selected;
-        //     const destinationList =
-        //       source.droppableId === "notSelected" ? _Selected : _notSelected;
-        //     const [removed] = sourceList.splice(source.index, 1);
-        //     destinationList.splice(destination.index, 0, removed);
-        //     setNotSelected(_notSelected);
-        //     setSelected(_Selected);
-        //   }
+      const handleDragEnd = useCallback(
+        (result: DropResult) => {
+          if (!result.destination) {
+            return;
+          }
+    
+          const newState = [...tracklists!.tracks];
+    
+          const [removed] = newState.splice(result.source.index, 1);
+          newState.splice(result.destination.index, 0, removed);
+          const tl = tracklists!
+          tl.tracks = newState as [TrackListsItemType]
+          setTrackLists(tl);
         },
         [tracklists]
       );
+    
   
   
     return (
@@ -156,8 +125,8 @@ export const Editor = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                         >
-                            {/* <EditTrackItem trackName={item.name} /> */}
-                            {item.name}
+                            <EditTrackItem trackName={item.name} />
+                            {/* {item.name} */}
                         </div>
                         )}
                     </Draggable>
