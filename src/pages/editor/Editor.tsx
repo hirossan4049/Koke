@@ -79,6 +79,18 @@ export const Editor = () => {
         [tracklists]
       );
     
+      const onAddClicked = useCallback(
+          (index: number) => {
+            setTrackLists(ta => {
+                ta!.tracks.splice(index + 1, 0, {name: "", time: 0})
+                return ta
+                }
+            )
+            // FIXME: なんとかする
+            setPlayIndex(playIndex => playIndex + 1)
+        
+          }, [tracklists]
+      )
   
   
     return (
@@ -125,7 +137,7 @@ export const Editor = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                         >
-                            <EditTrackItem trackName={item.name} />
+                            <EditTrackItem item={item} onAdd={() => onAddClicked(i)} />
                             {/* {item.name} */}
                         </div>
                         )}

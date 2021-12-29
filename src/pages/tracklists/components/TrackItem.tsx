@@ -15,7 +15,7 @@ function makeTime(num: number) {
     }
     const timeDMS = timeH + ':' + timeM + ':' + timeS;
     return timeDMS;
-  }
+}
   
 
 export const TrackItem = ({ item, isPlaying, onClick }: {item: TrackListsItemType, isPlaying: boolean, onClick: () => void }) => {
