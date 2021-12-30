@@ -16,6 +16,8 @@ export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: (
     const [mm, setMm] = useState("00")
     const [ss, setSs] = useState("00")
 
+    const [trackName, setTrackName] = useState(item.name)
+
     const [isHover, setIsHover] = useState(false)
 
     useEffect(() => {
@@ -26,6 +28,10 @@ export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: (
         setSs(s)
     }, [])
 
+    useEffect(() => {
+        setTrackName(item.name)
+    }, [item])
+
     return (
         // m={4}
         <Box p={2} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -35,7 +41,7 @@ export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: (
             <Input type="number" step="1" placeholder="分" textAlign={"center"} value={mm} w={12} p={1} onChange={(v) => {setMm(v.target.value.slice(-2))}}/>
             <Text fontSize={"xl"} p={1}>:</Text>
             <Input type="number" step="1" placeholder="秒" textAlign={"center"} value={ss} w={12} p={1} onChange={(v) => {setSs(v.target.value.slice(-2))}}/>
-            <Input placeholder="曲名を入力" ml={4} value={ item.name } />
+            <Input placeholder="曲名を入力" ml={4} value={ trackName } onChange={(e) => {setTrackName(e.target.value)}} />
             <Icon as={IoMenu} w={6} h={6} m={2} color={"gray.400"} onMouseEnter={() => setIsHover(false)} onMouseLeave={() => setIsHover(true)} />
         </Flex>
         <Collapse in={isHover} animateOpacity>
