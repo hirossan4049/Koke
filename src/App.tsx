@@ -11,7 +11,7 @@ import { Editor } from './pages/editor/Editor';
 function App() {
   return (
     <Box bg="gray.100" width="100" >
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         {/* <Flex bg="white" height={{base: "0", md: "10"}}>
         </Flex> */}
         <Routes >
