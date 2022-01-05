@@ -8,10 +8,7 @@ import { useEffect, useState } from "react";
 import { TrackListsType } from "../../actions/types";
 import axios from "axios";
 
-// import Logo from "../../../public/svara-logo.svg"
-
 export const Home = () => {
-
 
     const [tracklists, setTracklists] = useState<[TrackListsType]>()
 
