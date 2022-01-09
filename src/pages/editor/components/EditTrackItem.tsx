@@ -1,6 +1,6 @@
-import { Text, Flex, Input, Box, Spacer, Icon, Collapse, IconButton } from "@chakra-ui/react"
+import { Text, Flex, Input, Box, Spacer, Icon, Collapse, IconButton, ScaleFade } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { IoAdd, IoMenu } from "react-icons/io5"
+import { IoAdd, IoMenu, IoRemove, IoTrash, IoTrashBin, IoTrashBinOutline } from "react-icons/io5"
 import { TrackListsItemType } from "../../../actions/types"
 
 function makeTime(num: number) {
@@ -11,14 +11,15 @@ function makeTime(num: number) {
 }
   
 
-export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: () => void}) => {
+export const EditTrackItem = ({item, onAdd, onDelete, onTrackChanged}: {item: TrackListsItemType, onAdd: () => void, onDelete: () => void, onTrackChanged: (item: TrackListsItemType) => void}) => {
     const [hh, setHh] = useState("00")
     const [mm, setMm] = useState("00")
     const [ss, setSs] = useState("00")
 
     const [trackName, setTrackName] = useState(item.name)
 
-    const [isHover, setIsHover] = useState(false)
+    const [isHover, setIsHover] = useState(false) // Cell追加表示用のホバー
+    const [isCellHover, setIsCellHover] = useState(false) // Cell全体のホバー
 
     useEffect(() => {
         const [h, m, s] = makeTime(item.time)
@@ -32,10 +33,28 @@ export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: (
         setTrackName(item.name)
     }, [item])
 
+    useEffect(() => {
+        const h = Number(hh)
+        const m = Number(mm)
+        const s = Number(ss)
+        const time = s + (m * 60) + (h * 60 * 60)
+        const track = {
+            name: trackName,
+            time: time
+        }
+        onTrackChanged(track)
+    }, [hh, mm, ss, trackName])
+
     return (
-        // m={4}
-        <Box p={2} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-        <Flex rounded="xl" bg={"white"} shadow="sm" p={2}>
+        <Box p={2} onMouseEnter={() => {
+            setIsHover(true)
+            setIsCellHover(true)
+        }} onMouseLeave={() => {
+            setIsHover(false)
+            setIsCellHover(false)
+        }}>
+        <Flex>
+        <Flex rounded="xl" bg={"white"} shadow="sm" p={2} w={"100%"}>
             <Input type="number" step="1" placeholder="時" textAlign={"center"} value={hh} w={12} p={1} onChange={(v) => {setHh(v.target.value.slice(-2))}}/>
             <Text fontSize={"xl"} p={1}>:</Text>
             <Input type="number" step="1" placeholder="分" textAlign={"center"} value={mm} w={12} p={1} onChange={(v) => {setMm(v.target.value.slice(-2))}}/>
@@ -43,6 +62,10 @@ export const EditTrackItem = ({item, onAdd}: {item: TrackListsItemType, onAdd: (
             <Input type="number" step="1" placeholder="秒" textAlign={"center"} value={ss} w={12} p={1} onChange={(v) => {setSs(v.target.value.slice(-2))}}/>
             <Input placeholder="曲名を入力" ml={4} value={ trackName } onChange={(e) => {setTrackName(e.target.value)}} />
             <Icon as={IoMenu} w={6} h={6} m={2} color={"gray.400"} onMouseEnter={() => setIsHover(false)} onMouseLeave={() => setIsHover(true)} />
+        </Flex>
+        <ScaleFade in={isCellHover} initialScale={0.9}>
+            <IconButton aria-label="Search" icon={<Icon as={IoTrashBinOutline} w={6} h={6} color={"red"} />} w={6}  p={4} m={2} onClick={onDelete} />
+        </ScaleFade>
         </Flex>
         <Collapse in={isHover} animateOpacity>
         {/* IconButton aria-label="Search" icon=. */}

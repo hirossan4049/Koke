@@ -1,4 +1,4 @@
-import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState, useEffect, useCallback } from "react";
@@ -11,13 +11,14 @@ import { useYoutube, YoutubeEmbed } from "../components/YoutubeEmbed";
 import Youtube from "react-youtube";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
-import { tracklistsState } from "../tracklists/recoil/atoms";
+import { tracklistsState } from "./recoil/atoms";
 import { EditTrackItem } from "./components/EditTrackItem";
 
 export const Editor = () => {
     const { trackId } = useParams<{trackId: string}>();
 
     const [tracklists, setTrackLists] = useState<TrackListsType>()
+    // const [tracklists, setTrackLists] = useRecoilState(tracklistsState)
   
     const [playIndex, setPlayIndex] = useState(0)
   
@@ -79,28 +80,40 @@ export const Editor = () => {
         [tracklists]
       );
     
-      const onAddClicked = useCallback(
-          (index: number) => {
-            setTrackLists(ta => {
-                ta!.tracks.splice(index + 1, 0, {name: "", time: 0})
-                return ta
-                }
-            )
-            // FIXME: なんとかする
-            setPlayIndex(playIndex => playIndex + 1)
-        
-          }, [tracklists]
-      )
+    const onAddClicked = (index: number) => {
+      const tl = tracklists!.tracks
+      tl.splice(index + 1, 0, {name: "", time: 0})
+      setTrackLists({...tracklists!, tracks: tl})        
+    }
+
+    const onDeleteClicked = (index: number) => {
+        const tl = tracklists!.tracks
+        tl.splice(index, 1)
+        setTrackLists({...tracklists!, tracks: tl})
+    }
+
+    const save = () => {
+      axios.post("http://localhost:8000/tracklists/update/" + trackId, tracklists)
+      .then(res => {
+        console.log(res)
+      })
+    }
+
+    const onTrackChanged = (index: number, track: TrackListsItemType) => {
+      const tracks = tracklists!.tracks
+      tracks[index] = track
+      setTrackLists({...tracklists!, tracks: tracks})
+    }
   
   
     return (
       <>
       <Flex bgColor={"white"} shadow={"sm"} h={14} align={"center"} >
               <Text>編集</Text>
-          <Button colorScheme='pink' rounded={"full"}>保存</Button>
+          <Button colorScheme='pink' rounded={"full"} onClick={save}>保存</Button>
       </Flex>
       <Center>
-        <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 24}} align="center" >
+        <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 20}} align="center" >
           <Heading as="h3" size="md" >{ tracklists?.trackName } </Heading>
   
           <Box bg="white" p={4} m={4} mt={6} align="center" rounded="xl" shadow="sm">
@@ -137,8 +150,9 @@ export const Editor = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                         >
-                            <EditTrackItem item={item} onAdd={() => onAddClicked(i)} />
-                            {/* {item.name} */}
+                          <ScaleFade in={true}>
+                            <EditTrackItem item={item} onAdd={() => onAddClicked(i)} onDelete={() => onDeleteClicked(i)} onTrackChanged={(item) => onTrackChanged(i, item)} />
+                            </ScaleFade>
                         </div>
                         )}
                     </Draggable>
@@ -155,7 +169,7 @@ export const Editor = () => {
         <Flex pos="fixed" zIndex={2} bg="white" h={"72px"} bottom={0} m={"4"} mr={"2%"} ml={"2%"} shadow="2xl" rounded="2xl" w="96%" align={"center"}>
           <Icon as={isPlaying ? IoPause : IoPlay} w={7} h={7} color={"gray.600"} ml={4} mb={4} onClick={() => onPlayPauseButtonClick()} />
           <Box ml={4} mb={4}>
-            <Text fontSize="18" fontWeight={"bold"}>{tracklists?.tracks[playIndex].name }</Text>
+            <Text fontSize="18" fontWeight={"bold"}>{tracklists?.tracks[playIndex]?.name }</Text>
             <Text fontSize="13" fontWeight={"bold"} color={"gray.500"}>{tracklists?.trackName }</Text>
           </Box>
           <Box pos="absolute" zIndex={3} w="98%" bottom={0} mr={"1%"} ml={"1%"}>
