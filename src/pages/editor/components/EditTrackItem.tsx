@@ -31,6 +31,12 @@ export const EditTrackItem = ({item, onAdd, onDelete, onTrackChanged}: {item: Tr
 
     useEffect(() => {
         setTrackName(item.name)
+        const [h, m, s] = makeTime(item.time)
+        if (h !== "00" || m !=="00" || s !== "00") {
+            setHh(h)
+            setMm(m)
+            setSs(s)
+        }
     }, [item])
 
     useEffect(() => {
@@ -46,7 +52,7 @@ export const EditTrackItem = ({item, onAdd, onDelete, onTrackChanged}: {item: Tr
     }, [hh, mm, ss, trackName])
 
     return (
-        <Box p={2} onMouseEnter={() => {
+        <Box p={2} pr={0} onMouseEnter={() => {
             setIsHover(true)
             setIsCellHover(true)
         }} onMouseLeave={() => {

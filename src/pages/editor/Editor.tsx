@@ -1,4 +1,4 @@
-import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input, IconButton } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState, useEffect, useCallback } from "react";
@@ -13,6 +13,8 @@ import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautif
 
 import { tracklistsState } from "./recoil/atoms";
 import { EditTrackItem } from "./components/EditTrackItem";
+import { Link } from "react-router-dom";
+import { Header } from "./components/Header";
 
 export const Editor = () => {
     const { trackId } = useParams<{trackId: string}>();
@@ -40,7 +42,7 @@ export const Editor = () => {
         }else {
           setTrackLists({
             trackId: trackId!,
-            trackName: "",
+            trackName: "無名",
             tracks: [{
               name: "Intro",
               time: 0
@@ -49,6 +51,10 @@ export const Editor = () => {
         }
       })
     }, [])
+
+    useEffect(() => {
+      document.title = (tracklists?.trackName ?? "無名") + " - 編集モード"
+    }, [tracklists?.trackName])
   
     const [count, setCount] = useState(0);
     useEffect(() => {
@@ -93,7 +99,8 @@ export const Editor = () => {
     
     const onAddClicked = (index: number) => {
       const tl = tracklists!.tracks
-      tl.splice(index + 1, 0, {name: "", time: 0})
+      console.log(seekBarValue)
+      tl.splice(index + 1, 0, {name: "", time: parseInt(seekBarValue.toString())})
       setTrackLists({...tracklists!, tracks: tl})        
     }
 
@@ -119,17 +126,13 @@ export const Editor = () => {
   
     return (
       <>
-      <Flex bgColor={""} shadow={"sm"} h={14} align={"center"} p={6} >
-              <Image src={"../../svara-logo.svg"} alt="svara logo" h={10} bg={"pink.400"} rounded={"md"} />
-              <Text color={"gray"} w={"100%"} textAlign={"center"} fontWeight={"bold"} fontSize={"md"} >{tracklists?.trackName} - 編集モード</Text>
-          <Button colorScheme='pink' rounded={"full"} w={24} onClick={save}>保存</Button>
-      </Flex>
+      <Header trackName={tracklists?.trackName ?? "無名"} save={save} />
       <Center>
         <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 20}} align="center" >
           <Input placeholder="タイトルを入力" fontWeight={"bold"} fontSize={"xl"} value={tracklists?.trackName} onChange={(e) => {setTrackLists({...tracklists!, trackName: e.target.value})}} textAlign={"center"}></Input>
   
-          <Box bg="white" p={4} m={4} mt={6} align="center" rounded="xl" shadow="sm">
-            {/* <Youtube
+          <Box bg="white" p={4} m={2} mr={14} mt={6} align="center" rounded="xl" shadow="sm">
+            <Youtube
             videoId={trackId}
             onReady={onReady}
             opts={{ 
@@ -139,7 +142,7 @@ export const Editor = () => {
                 disablekb: 1,
               }
             }}
-            /> */}
+            />
           </Box>
 
         <DragDropContext onDragEnd={handleDragEnd}>

@@ -12,6 +12,8 @@ export const Home = () => {
 
     const [tracklists, setTracklists] = useState<[TrackListsType]>()
 
+    document.title = "śvara tracklists"
+
     useEffect(() => {
         axios.get<[TrackListsType]>("http://localhost:8000/latest-tracklists")
         .then(res => {
