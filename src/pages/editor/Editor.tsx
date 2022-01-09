@@ -1,4 +1,4 @@
-import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState, useEffect, useCallback } from "react";
@@ -35,7 +35,18 @@ export const Editor = () => {
     useEffect(() => {
       axios.get<TrackListsType>("http://localhost:8000/tracklists/" + trackId)
       .then(res => {
-        setTrackLists(res.data)
+        if (res.data != null) {
+          setTrackLists(res.data)
+        }else {
+          setTrackLists({
+            trackId: trackId!,
+            trackName: "",
+            tracks: [{
+              name: "Intro",
+              time: 0
+            }]
+          })
+        }
       })
     }, [])
   
@@ -108,13 +119,14 @@ export const Editor = () => {
   
     return (
       <>
-      <Flex bgColor={"white"} shadow={"sm"} h={14} align={"center"} >
-              <Text>編集</Text>
-          <Button colorScheme='pink' rounded={"full"} onClick={save}>保存</Button>
+      <Flex bgColor={""} shadow={"sm"} h={14} align={"center"} p={6} >
+              <Image src={"../../svara-logo.svg"} alt="svara logo" h={10} bg={"pink.400"} rounded={"md"} />
+              <Text color={"gray"} w={"100%"} textAlign={"center"} fontWeight={"bold"} fontSize={"md"} >{tracklists?.trackName} - 編集モード</Text>
+          <Button colorScheme='pink' rounded={"full"} w={24} onClick={save}>保存</Button>
       </Flex>
       <Center>
         <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 20}} align="center" >
-          <Heading as="h3" size="md" >{ tracklists?.trackName } </Heading>
+          <Input placeholder="タイトルを入力" fontWeight={"bold"} fontSize={"xl"} value={tracklists?.trackName} onChange={(e) => {setTrackLists({...tracklists!, trackName: e.target.value})}} textAlign={"center"}></Input>
   
           <Box bg="white" p={4} m={4} mt={6} align="center" rounded="xl" shadow="sm">
             {/* <Youtube
@@ -131,14 +143,6 @@ export const Editor = () => {
           </Box>
 
         <DragDropContext onDragEnd={handleDragEnd}>
-          {/* <Droppable droppableId="characters">
-            {(provided) => (
-                <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                    { tracklists?.tracks.map((track, index) => (<EditTrackItem />)) }
-                </ul>
-            )}
-            </Droppable> */}
-
             <Droppable key="selected" droppableId="selected">
                 {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
