@@ -77,7 +77,7 @@ export const TrackLists = () => {
     <>
     <Header trackName={tracklists?.trackName ?? "無名"} switchEditMode={onSwitchEditModeDialogOpen} />
     <Center>
-      <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 24}} align="center" >
+      <Box pb={82} pt={16} p={{base: 2, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 2, md: 24}} align="center" >
         <Heading as="h3" size="md" >{ tracklists?.trackName } </Heading>
 
         <Box bg="white" p={4} m={4} mt={6} align="center" rounded="xl" shadow="sm">

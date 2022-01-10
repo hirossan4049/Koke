@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Box, Text, LinkBox, LinkOverlay, Skeleton } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export const HomeTrackItem = ({ title, artist, isLoading, href}: {title: string, artist: string, isLoading?: boolean, href: string}) => {
     return (
@@ -9,12 +10,12 @@ export const HomeTrackItem = ({ title, artist, isLoading, href}: {title: string,
                 <Skeleton mb={4} h={"1rem"} />
                 <Skeleton mb={4} h={"1rem"} w={20} />
             </Box> :
-            <LinkOverlay href={href} >
+            <Link to={href} >
                 <Box textAlign={"left"}>
                     <Text fontSize='xl' fontWeight="bold" color="gray.600"> {title} </Text>
                     <Text fontSize='sm' fontWeight="bold" color="gray.500" h={5}> {artist} </Text>
                 </Box>
-            </LinkOverlay>
+            </Link>
             }
         </LinkBox>
     )
