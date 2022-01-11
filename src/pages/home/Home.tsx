@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import { TrackListsType } from "../../actions/types";
 import axios from "axios";
+import { fetchLatestTracklists } from "../../actions/api";
 
 export const Home = () => {
 
@@ -15,7 +16,9 @@ export const Home = () => {
     document.title = "śvara tracklists"
 
     useEffect(() => {
-        axios.get<[TrackListsType]>("http://localhost:8000/latest-tracklists")
+        // fetchLatestTracklists(cb) 
+
+        axios.get<[TrackListsType]>("https://s-vara.herokuapp.com/latest-tracklists")
         .then(res => {
             console.log("res.data", res.data)
           setTracklists(res.data)

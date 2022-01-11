@@ -35,7 +35,7 @@ export const Editor = () => {
     } = useYoutube();
   
     useEffect(() => {
-      axios.get<TrackListsType>("http://localhost:8000/tracklists/" + trackId)
+      axios.get<TrackListsType>("https://s-vara.herokuapp.com/tracklists/" + trackId)
       .then(res => {
         if (res.data != null) {
           setTrackLists(res.data)
@@ -111,7 +111,7 @@ export const Editor = () => {
     }
 
     const save = () => {
-      axios.post("http://localhost:8000/tracklists/update/" + trackId, tracklists)
+      axios.post("https://s-vara.herokuapp.com/tracklists/update/" + trackId, tracklists)
       .then(res => {
         console.log(res)
       })

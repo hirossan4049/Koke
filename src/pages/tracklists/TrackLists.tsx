@@ -39,7 +39,7 @@ export const TrackLists = () => {
   } = useYoutube();
 
   useEffect(() => {
-    axios.get<TrackListsType>("http://localhost:8000/tracklists/" + trackId)
+    axios.get<TrackListsType>("https://s-vara.herokuapp.com/tracklists/" + trackId)
     .then(res => {
       setTrackLists(res.data)
     })
