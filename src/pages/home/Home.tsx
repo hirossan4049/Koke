@@ -1,18 +1,22 @@
-import * as React from "react"
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-import { Box, Heading, Flex, Text, Input, Center, Icon, Image, LinkOverlay, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Input, Center, Icon, Image, LinkOverlay, InputGroup, InputRightElement, IconButton, useToast } from "@chakra-ui/react";
 import { IoArrowForward } from "react-icons/io5";
 import { HomeTrackItem } from "./components/HomeTrackItem";
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 
 import { TrackListsType } from "../../actions/types";
 import axios from "axios";
 import { fetchLatestTracklists } from "../../actions/api";
 
-export const Home = () => {
 
+export const Home = () => {
+    const navigate = useNavigate();
     const [tracklists, setTracklists] = useState<[TrackListsType]>()
+    const [searchText, setSearchText] = useState("")
     const [isLoading, setIsLoading] = useState(true)
+    const toast = useToast()
 
     document.title = "śvara tracklists"
 
@@ -25,6 +29,26 @@ export const Home = () => {
             setIsLoading(false)
         })
       }, [])
+
+      const navigateTrackLists = () => {
+          if (searchText !== "") {
+            navigate('/tracklists/' + searchText)
+          }else {
+            toast({
+                title: '値が空です。',
+                position: "top",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+          }
+      }
+
+      const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
+          if (e.key == "Enter") {
+              navigateTrackLists()
+          }
+      }
 
 
     return (
@@ -39,8 +63,8 @@ export const Home = () => {
             <Text mt={10} fontSize={{md: "2xl", base: "xl"}} color={"gray.100"} fontWeight={"bold"} textAlign={"center"} >ಸ್ವರ śvaraはYoutubeに上がっている音楽ライブのトラックリストをより見やすくしたWebアプリです</Text>
             <Center>
                 <InputGroup mt={{md: 28, base: 6}} w="500px" >
-                    <Input bg={"white"} rounded={"full"} h={{md: 16, base: 12}} border={"none"} boxShadow={"red"} fontWeight={"bold"} shadow={"xl"} fontSize={{md: "24", base: "18"}} placeholder='Youtube動画URLまたはIDを入力' />
-                    <InputRightElement h={{md: 16, base: 12}} children={<IconButton aria-label="Search" icon={<Icon as={IoArrowForward} w={{md: 8, base: 6}} h={{md: 8, base: 6}} />} bgColor={"white"} color="red.400" mr={4} rounded={"full"} onClick={() => {console.log("clicked")}} />} />
+                    <Input onKeyDown={handleKeydown} value={searchText} onChange={(e) => {setSearchText(e.target.value)}} bg={"white"} rounded={"full"} h={{md: 16, base: 12}} border={"none"} boxShadow={"red"} fontWeight={"bold"} shadow={"xl"} fontSize={{md: "24", base: "18"}} placeholder='Youtube動画URLまたはIDを入力' />
+                    <InputRightElement h={{md: 16, base: 12}} children={<IconButton aria-label="Search" icon={<Icon as={IoArrowForward} w={{md: 8, base: 6}} h={{md: 8, base: 6}} />} bgColor={"white"} color="red.400" mr={4} rounded={"full"} onClick={() => {navigateTrackLists()}} />} />
                 </InputGroup>
             </Center>
             </Box>
