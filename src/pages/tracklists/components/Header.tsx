@@ -6,7 +6,7 @@ export const Header = ({trackName, switchEditMode}: {trackName: String, switchEd
     return (
         <Flex bgColor={""} shadow={"sm"} h={14} align={"center"} p={6} >
         <Link to={"/"}>
-          <IconButton aria-label="" icon={<Image src={"../../svara-logo.svg"} alt="svara logo" h={10} />}  colorScheme={"pink.400"} bg={"pink.400"} rounded={"md"} href={"/"}/>
+          <IconButton aria-label="" icon={<Image src={"../../svara-logo.svg"} alt="svara logo" h={12} />}  colorScheme={"black"} bg={"black"} rounded={"md"} href={"/"}/>
         </Link>
         <Text color={"gray"} w={"100%"} textAlign={"center"} fontWeight={"bold"} fontSize={"md"} >{trackName}</Text>
         {/* <Link to={"/editor/" + trackId} > */}

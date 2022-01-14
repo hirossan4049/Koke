@@ -15,6 +15,7 @@ import { tracklistsState } from "./recoil/atoms";
 import { EditTrackItem } from "./components/EditTrackItem";
 import { Link } from "react-router-dom";
 import { Header } from "./components/Header";
+import { apiURL } from "../../actions/constants";
 
 export const Editor = () => {
     const { trackId } = useParams<{trackId: string}>();
@@ -35,7 +36,7 @@ export const Editor = () => {
     } = useYoutube();
   
     useEffect(() => {
-      axios.get<TrackListsType>("https://s-vara.herokuapp.com/tracklists/" + trackId)
+      axios.get<TrackListsType>(apiURL + "/tracklists/" + trackId)
       .then(res => {
         if (res.data != null) {
           setTrackLists(res.data)
@@ -111,7 +112,7 @@ export const Editor = () => {
     }
 
     const save = () => {
-      axios.post("https://s-vara.herokuapp.com/tracklists/update/" + trackId, tracklists)
+      axios.post(apiURL + "/tracklists/update/" + trackId, tracklists)
       .then(res => {
         console.log(res)
       })

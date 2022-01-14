@@ -17,6 +17,7 @@ import { Box, Heading, Flex, Text, Icon, Slider, SliderTrack, SliderFilledTrack,
 import Youtube from "react-youtube";
 import { IoPause, IoPlay } from "react-icons/io5";
 import { Header } from "./components/Header";
+import { apiURL } from "../../actions/constants";
 
 
 export const TrackLists = () => {
@@ -39,7 +40,7 @@ export const TrackLists = () => {
   } = useYoutube();
 
   useEffect(() => {
-    axios.get<TrackListsType>("https://s-vara.herokuapp.com/tracklists/" + trackId)
+    axios.get<TrackListsType>(apiURL + "/tracklists/" + trackId)
     .then(res => {
       setTrackLists(res.data)
     })
