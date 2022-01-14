@@ -41,14 +41,18 @@ export const Editor = () => {
         if (res.data != null) {
           setTrackLists(res.data)
         }else {
-          setTrackLists({
-            trackId: trackId!,
-            trackName: "無名",
-            tracks: [{
-              name: "Intro",
-              time: 0
-            }]
+          axios.get("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + trackId + "&format=json")
+          .then(res => {
+            setTrackLists({
+              trackId: trackId!,
+              trackName: res.data["title"],
+              tracks: [{
+                name: "Intro",
+                time: 0
+              }]
+            })
           })
+
         }
       })
     }, [])
@@ -130,7 +134,9 @@ export const Editor = () => {
       <Header trackName={tracklists?.trackName ?? "無名"} save={save} />
       <Center>
         <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 20}} align="center" >
-          <Input placeholder="タイトルを入力" fontWeight={"bold"} fontSize={"xl"} value={tracklists?.trackName} onChange={(e) => {setTrackLists({...tracklists!, trackName: e.target.value})}} textAlign={"center"}></Input>
+          {/* <Input placeholder="タイトルを入力" fontWeight={"bold"} fontSize={"xl"} value={tracklists?.trackName} onChange={(e) => {setTrackLists({...tracklists!, trackName: e.target.value})}} textAlign={"center"}></Input> */}
+          <Heading as="h3" size="md" >{ tracklists?.trackName } </Heading>
+
   
           <Box bg="white" p={4} m={2} mr={14} mt={6} align="center" rounded="xl" shadow="sm">
             <Youtube
@@ -177,8 +183,8 @@ export const Editor = () => {
         <Flex pos="fixed" zIndex={2} bg="white" h={"72px"} bottom={0} m={"4"} mr={"2%"} ml={"2%"} shadow="2xl" rounded="2xl" w="96%" align={"center"}>
           <Icon as={isPlaying ? IoPause : IoPlay} w={7} h={7} color={"gray.600"} ml={4} mb={4} onClick={() => onPlayPauseButtonClick()} />
           <Box ml={4} mb={4}>
-            <Text fontSize="18" fontWeight={"bold"}>{tracklists?.tracks[playIndex]?.name }</Text>
-            <Text fontSize="13" fontWeight={"bold"} color={"gray.500"}>{tracklists?.trackName }</Text>
+            <Text fontSize="18" fontWeight={"bold"}>{ tracklists?.tracks[playIndex]?.name }</Text>
+            <Text fontSize="13" fontWeight={"bold"} color={"gray.500"}>{ tracklists?.trackName }</Text>
           </Box>
           <Box pos="absolute" zIndex={3} w="98%" bottom={0} mr={"1%"} ml={"1%"}>
             <Slider

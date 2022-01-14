@@ -96,16 +96,16 @@ export const Home = () => {
                     <Text fontSize={{base: "xl", md: "2xl"}} fontWeight={"bold"} pl={{base: 2, md: 6}} >最近追加されたトラックリスト</Text>
                     { isLoading ?
                         <Box>
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
-                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
+                        <HomeTrackItem isLoading={true} title={""} artist={""} href={""} trackId={""} />
                         </Box>
                         :
                         tracklists?.map((value) => (
-                            <HomeTrackItem title={value.trackName} artist={"アーティスト: 不明"} href={"/tracklists/" + value.trackId} />
+                            <HomeTrackItem trackId={value.trackId} title={value.trackName} artist={"アーティスト: 不明"} href={"/tracklists/" + value.trackId} />
                             ))
                     }
                 </Box>
