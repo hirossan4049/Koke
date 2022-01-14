@@ -1,15 +1,16 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Heading, Flex, Text, Input, Center, Icon, Image, LinkOverlay, InputGroup, InputRightElement, IconButton, useToast } from "@chakra-ui/react";
+import { Box, Text, Input, Center, Icon, Img, InputGroup, InputRightElement, IconButton, useToast } from "@chakra-ui/react";
 import { IoArrowForward } from "react-icons/io5";
 import { HomeTrackItem } from "./components/HomeTrackItem";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 import { TrackListsType } from "../../actions/types";
 import axios from "axios";
-import { fetchLatestTracklists } from "../../actions/api";
 import { apiURL } from '../../actions/constants';
+
+import Logo from "../../assets/svara-logo.svg"
 
 
 export const Home = () => {
@@ -76,10 +77,10 @@ export const Home = () => {
         {/* bgGradient='linear(to-l, red.400, pink.400)' */}
             <Box  bg={"black"} backgroundImage={"home-background.png"} backgroundSize={"contain"} h={{md: "900", base: "300"}} p={{md: 32, base: 4}} verticalAlign={"center"} transform={"skewY(-3deg)"} transformOrigin={"top left"} >
                 <Box transform={"skewY(3deg)"}>
-                    <Image src={"svara-logo.svg"} alt="svara logo" w={{md: 32, base: 24}} />
+                    <Img src={Logo} alt="svara logo" w={{md: 32, base: 24}} />
 
             <Center>
-            <Image mt={{md: 32, base: 0}} src={"svara-logo.svg"} alt="svara logo" h={{md: 20, base: 0}} />
+            <Img mt={{md: 32, base: 0}} src={Logo} alt="svara logo" h={{md: 20, base: 0}} />
             </Center>
             <Text mt={10} fontSize={"xl"} color={"gray.100"} fontWeight={"bold"} textAlign={"center"} >Youtubeに上がっている音楽ライブのトラックリストをより見やすくしたWebアプリです</Text>
             <Center>
