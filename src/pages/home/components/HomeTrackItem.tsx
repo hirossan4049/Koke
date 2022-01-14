@@ -16,7 +16,7 @@ export const HomeTrackItem = ({ title = "", artist = "", trackId = "", isLoading
             <Link to={href} >
                 <Flex h={24}>
                     {/* src={"https://img.youtube.com/vi/" + trackId + "/0.jpg"} */}
-                    <Image src={"http://i.ytimg.com/vi/" + trackId + "/maxresdefault.jpg"}  w={36} h={24} rounded={"md"} />
+                    <Image src={"https://i.ytimg.com/vi/" + trackId + "/maxresdefault.jpg"}  w={36} h={24} rounded={"md"} />
                 <Box textAlign={"left"} pl={4}>
                     <Text fontSize={{base: "md", md: 'xl'}} fontWeight="bold" color="gray.600"> {title} </Text>
                     <Text fontSize={{base: "12", md: 'sm'}} fontWeight="bold" color="gray.500" h={{base: 4, md: 5}}> {artist} </Text>
