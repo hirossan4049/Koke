@@ -20,7 +20,7 @@ function makeTime(num: number) {
 
 export const TrackItem = ({ item, isPlaying, onClick }: {item: TrackListsItemType, isPlaying: boolean, onClick: () => void }) => {
     return (
-        <LinkBox rounded="xl" bg={ isPlaying ? "blue.100" : "white"} shadow="sm" p={2} m={4}>
+        <LinkBox rounded="xl" bg={ isPlaying ? "blue.100" : "white"} shadow="sm" p={2} m={{base: 2, md: 4}}>
             {/* <Skeleton mb={4} h={"1rem"} />
             <Skeleton mb={4} h={"1rem"} w={20} /> */}
         <LinkOverlay href={'#' + item.time} onClick={ () => onClick() }>
@@ -32,7 +32,7 @@ export const TrackItem = ({ item, isPlaying, onClick }: {item: TrackListsItemTyp
                     
                 </Box>
                 <Box textAlign={"left"}>
-                    <Text fontSize='lg' fontWeight="bold" color="gray.600"> { item.name } </Text>
+                    <Text fontSize={{base: 'md', md: 'lg'}} fontWeight="bold" color="gray.600"> { item.name } </Text>
                     <Text fontSize='sm' fontWeight="bold" color="gray.500"> { makeTime(item.time) } </Text>
                 </Box>
                 </Flex>
