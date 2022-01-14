@@ -1,6 +1,6 @@
-import { Text, Flex, Input, Box, Spacer, Icon, Collapse, IconButton, ScaleFade } from "@chakra-ui/react"
+import { Text, Flex, Input, Box, Icon, Collapse, IconButton, ScaleFade } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { IoAdd, IoMenu, IoRemove, IoTrash, IoTrashBin, IoTrashBinOutline } from "react-icons/io5"
+import { IoAdd, IoMenu, IoTrashBinOutline } from "react-icons/io5"
 import { TrackListsItemType } from "../../../actions/types"
 
 function makeTime(num: number) {

@@ -74,7 +74,7 @@ export const Home = () => {
     return (
         <>
         {/* bgGradient='linear(to-l, red.400, pink.400)' */}
-            <Box backgroundImage={"home-background.png"} backgroundSize={"contain"} h={{md: "900", base: "300"}} p={{md: 32, base: 4}} verticalAlign={"center"} transform={"skewY(-3deg)"} transformOrigin={"top left"} >
+            <Box  bg={"black"} backgroundImage={"home-background.png"} backgroundSize={"contain"} h={{md: "900", base: "300"}} p={{md: 32, base: 4}} verticalAlign={"center"} transform={"skewY(-3deg)"} transformOrigin={"top left"} >
                 <Box transform={"skewY(3deg)"}>
                     <Image src={"svara-logo.svg"} alt="svara logo" w={{md: 32, base: 24}} />
 
