@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, Text, LinkBox, Image, Skeleton, Flex, Icon, ScaleFade } from "@chakra-ui/react";
+import { Box, Text, LinkBox, Image, Skeleton, Flex, Icon, ScaleFade, Center } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { IoPlay } from "react-icons/io5";
 
@@ -18,11 +18,14 @@ export const HomeTrackItem = ({ title = "", artist = "", trackId = "", isLoading
             <Link to={href} >
                 <Flex h={24}>
                     {/* src={"https://img.youtube.com/vi/" + trackId + "/0.jpg"} */}
-                    <Image src={"https://i.ytimg.com/vi/" + trackId + "/maxresdefault.jpg"}  w={36} h={24} rounded={"md"} />
+                    <Image bg={"black"} src={"https://i.ytimg.com/vi/" + trackId + "/maxresdefault.jpg"} w={36} h={24} rounded={"md"} />
+                    {/* <Image bg={"black"} w={36} h={24} rounded={"md"} /> */}
                     <Box position={"absolute"} w={36} h={24}>
+                    <Center h={{base: '100%', md: 0}} >
                         <ScaleFade in={isHover}>
-                            <Icon as={IoPlay} w={36} h={24} p={6} color={"white"}/>
+                            <Icon as={IoPlay} w={10} h={10}  color={"white"}/>
                         </ScaleFade>
+                        </Center>
                     </Box>
 
                 <Box textAlign={"left"} pl={4}>
