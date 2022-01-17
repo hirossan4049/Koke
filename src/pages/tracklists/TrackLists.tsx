@@ -71,7 +71,7 @@ export const TrackLists = () => {
         setPlayIndex(lastIndex)
       }
     
-  }, [count])
+  }, [seekBarValue])
 
 
   return (
