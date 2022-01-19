@@ -1,4 +1,4 @@
-import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input, IconButton } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input, IconButton, useToast, useBoolean } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState, useEffect, useCallback } from "react";
@@ -20,10 +20,13 @@ import { apiURL } from "../../actions/constants";
 export const Editor = () => {
     const { trackId } = useParams<{trackId: string}>();
 
+    const [isLoading, setIsLoading] = useBoolean(true)
+
     const [tracklists, setTrackLists] = useState<TrackListsType>()
     // const [tracklists, setTrackLists] = useRecoilState(tracklistsState)
   
     const [playIndex, setPlayIndex] = useState(0)
+    const toast = useToast()
   
     const {
       isPlaying,
@@ -38,6 +41,7 @@ export const Editor = () => {
     useEffect(() => {
       axios.get<TrackListsType>(apiURL + "/tracklists/" + trackId)
       .then(res => {
+        setIsLoading.off()
         if (res.data != null) {
           setTrackLists(res.data)
         }else {
@@ -116,9 +120,18 @@ export const Editor = () => {
     }
 
     const save = () => {
+      setIsLoading.on()
       axios.post(apiURL + "/tracklists/update/" + trackId, tracklists)
       .then(res => {
+        setIsLoading.off()
         console.log(res)
+        toast({
+          title: "保存成功",
+          position: "top",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
       })
     }
 
@@ -131,7 +144,7 @@ export const Editor = () => {
   
     return (
       <>
-      <Header trackName={tracklists?.trackName ?? "無名"} save={save} />
+      <Header trackName={tracklists?.trackName ?? "無名"} save={save} isLoading={isLoading} />
       <Center>
         <Box pb={82} pt={16} p={{base: 4, md: 32}} w={{base: "none",md: "6xl"}} pr={{ base: 0, md: 20}} align="center" >
           {/* <Input placeholder="タイトルを入力" fontWeight={"bold"} fontSize={"xl"} value={tracklists?.trackName} onChange={(e) => {setTrackLists({...tracklists!, trackName: e.target.value})}} textAlign={"center"}></Input> */}
