@@ -1,19 +1,15 @@
-import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, Button, ScaleFade, Image, Input, IconButton, useToast, useBoolean } from "@chakra-ui/react";
+import { Center, Box, Heading, Flex, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text, ScaleFade, useToast, useBoolean } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState, useEffect, useCallback } from "react";
 import { IoPause, IoPlay } from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import { TrackListsItemType, TrackListsType } from "../../actions/types";
-import { TrackItem } from "../tracklists/components/TrackItem";
-import { useYoutube, YoutubeEmbed } from "../components/YoutubeEmbed";
+import { useYoutube } from "../components/YoutubeEmbed";
 import Youtube from "react-youtube";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
-import { tracklistsState } from "./recoil/atoms";
 import { EditTrackItem } from "./components/EditTrackItem";
-import { Link } from "react-router-dom";
 import { Header } from "./components/Header";
 import { apiURL } from "../../actions/constants";
 
@@ -59,6 +55,7 @@ export const Editor = () => {
 
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -73,11 +70,12 @@ export const Editor = () => {
         }
       }, 1000);
       return () => clearInterval(interval);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   
     useEffect(() => {
         let lastIndex = 0
-        tracklists?.tracks.map((track, index) => {
+        tracklists?.tracks.forEach((track, index) => {
           if (seekBarValue >= track.time) {
             lastIndex = index
           }
