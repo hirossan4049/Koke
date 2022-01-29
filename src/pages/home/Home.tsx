@@ -39,7 +39,7 @@ export const Home = () => {
           }
           if (searchText.includes("youtube.com/")) {
               // https://www.youtube.com/watch?v=yxjBMAFQVpU&t=2041s -> yxjBMAFQVpU
-              const results = searchText.match("v=([a-zA-Z0-9-]+)&?")
+              const results = searchText.match("v=([a-zA-Z0-9-_]+)&?")
               if (results && results[1].length == 11) {
                 navigate('/tracklists/' + results[1])
               } else {
