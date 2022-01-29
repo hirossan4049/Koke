@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Koke/static/css/main.0eb12f18.css",
-    "main.js": "/Koke/static/js/main.9ce030f9.js",
+    "main.js": "/Koke/static/js/main.3fcf0eda.js",
     "static/js/787.e9e60bd0.chunk.js": "/Koke/static/js/787.e9e60bd0.chunk.js",
     "static/media/svara-logo.svg": "/Koke/static/media/svara-logo.9bda57b34702fc870fee5596965a89e0.svg",
     "index.html": "/Koke/index.html",
     "main.0eb12f18.css.map": "/Koke/static/css/main.0eb12f18.css.map",
-    "main.9ce030f9.js.map": "/Koke/static/js/main.9ce030f9.js.map",
+    "main.3fcf0eda.js.map": "/Koke/static/js/main.3fcf0eda.js.map",
     "787.e9e60bd0.chunk.js.map": "/Koke/static/js/787.e9e60bd0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0eb12f18.css",
-    "static/js/main.9ce030f9.js"
+    "static/js/main.3fcf0eda.js"
   ]
 }
