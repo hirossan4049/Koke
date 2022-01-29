@@ -18,6 +18,7 @@ import Youtube from "react-youtube";
 import { IoPause, IoPlay } from "react-icons/io5";
 import { Header } from "./components/Header";
 import { apiURL } from "../../actions/constants";
+import { fetchTracklists } from "../../actions/api";
 
 
 export const TrackLists = () => {
@@ -40,9 +41,8 @@ export const TrackLists = () => {
   } = useYoutube();
 
   useEffect(() => {
-    axios.get<TrackListsType>(apiURL + "/tracklists/" + trackId)
-    .then(res => {
-      setTrackLists(res.data)
+    fetchTracklists(trackId!, result => {
+      setTrackLists(result)
     })
   }, [])
 

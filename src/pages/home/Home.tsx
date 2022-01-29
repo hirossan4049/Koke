@@ -11,6 +11,7 @@ import axios from "axios";
 import { apiURL } from '../../actions/constants';
 
 import Logo from "../../assets/svara-logo.svg"
+import { fetchLatestTracklists } from '../../actions/api';
 
 
 export const Home = () => {
@@ -23,11 +24,8 @@ export const Home = () => {
     document.title = "śvara tracklists"
 
     useEffect(() => {
-        // fetchLatestTracklists(cb) 
-
-        axios.get<[TrackListsType]>(apiURL + "/latest-tracklists")
-        .then(res => {
-            setTracklists(res.data)
+        fetchLatestTracklists(result => {
+            setTracklists(result)
             setIsLoading(false)
         })
       }, [])
