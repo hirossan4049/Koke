@@ -1,6 +1,4 @@
-import React, { } from "react";
-
-import { LinkBox, Box, Heading, LinkOverlay, Skeleton, Text, Flex, Icon } from '@chakra-ui/react'
+import { LinkBox, Box, LinkOverlay, Text, Flex, Icon } from '@chakra-ui/react'
 import { TrackListsItemType } from "../../../actions/types";
 
 import { IoPlay, IoPause } from "react-icons/io5";

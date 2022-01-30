@@ -1,11 +1,9 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { TrackLists } from "./pages/tracklists/TrackLists"
 import { Home } from "./pages/home/Home"
-import logo from './logo.svg';
 import './App.css';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Editor } from './pages/editor/Editor';
 
 function App() {

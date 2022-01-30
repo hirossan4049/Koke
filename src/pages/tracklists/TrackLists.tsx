@@ -1,23 +1,17 @@
 import React, {
-    useCallback,
     useEffect,
-    useState,
-    ChangeEventHandler
-  } from "react";
+    useState  } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import axios from "axios";
 
-import { TrackListsType } from "../../actions/types";
 import { TrackItem } from "./components/TrackItem"
-import { useYoutube, YoutubeEmbed } from "../components/YoutubeEmbed";
+import { useYoutube } from "../components/YoutubeEmbed";
 import { tracklistsState } from "./recoil/atoms";
 import { Box, Heading, Flex, Text, Icon, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Center, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Stack } from "@chakra-ui/react";
 
 import Youtube from "react-youtube";
 import { IoPause, IoPlay } from "react-icons/io5";
 import { Header } from "./components/Header";
-import { apiURL } from "../../actions/constants";
 import { fetchTracklists } from "../../actions/api";
 
 

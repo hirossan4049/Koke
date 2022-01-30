@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Text, Input, Center, Icon, Img, InputGroup, InputRightElement, IconButton, useToast } from "@chakra-ui/react";
@@ -7,8 +6,6 @@ import { HomeTrackItem } from "./components/HomeTrackItem";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 import { TrackListsType } from "../../actions/types";
-import axios from "axios";
-import { apiURL } from '../../actions/constants';
 
 import Logo from "../../assets/svara-logo.svg"
 import { fetchLatestTracklists } from '../../actions/api';
