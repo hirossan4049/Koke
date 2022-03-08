@@ -103,7 +103,7 @@ export const TrackLists = () => {
       <Flex pos="fixed" zIndex={2} bg="white" h={"72px"} bottom={0} m={"4"} mr={"2%"} ml={"2%"} shadow="2xl" rounded="2xl" w="96%" align={"center"}>
         <Icon as={isPlaying ? IoPause : IoPlay} w={7} h={7} color={"gray.600"} ml={4} mb={4} onClick={() => onPlayPauseButtonClick()} />
         <Box ml={4} mb={4}>
-          <Text fontSize={{base: "md", md: "lg"}} fontWeight={"bold"}>{tracklists?.tracks[playIndex].name }</Text>
+          <Text fontSize={{base: "md", md: "lg"}} fontWeight={"bold"}>{tracklists?.tracks[playIndex]?.name }</Text>
           <Text fontSize="xs" fontWeight={"bold"} color={"gray.500"}>{tracklists?.trackName }</Text>
         </Box>
         <Box pos="absolute" zIndex={3} w="98%" bottom={0} mr={"1%"} ml={"1%"}>
