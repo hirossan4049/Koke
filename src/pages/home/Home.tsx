@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Text, Input, Center, Icon, Img, InputGroup, InputRightElement, IconButton, useToast } from "@chakra-ui/react";
+import { Box, Text, Input, Center, Icon, Img, InputGroup, InputRightElement, IconButton, useToast, Button, Flex, Spacer } from "@chakra-ui/react";
 import { IoArrowForward } from "react-icons/io5";
 import { HomeTrackItem } from "./components/HomeTrackItem";
 import { KeyboardEvent, useEffect, useState } from "react";
@@ -104,8 +104,15 @@ export const Home = () => {
                             <HomeTrackItem trackId={value.trackId} title={value.trackName} artist={"アーティスト: 不明"} href={"/tracklists/" + value.trackId} />
                             ))
                     }
+
+                    <Flex>
+                        <Spacer/>
+                        <Button mr={{base: 2, md: 4}} >もっと見る</Button>
+                    </Flex>
+
                 </Box>
             </Center>
+
         </>
     )
 }
